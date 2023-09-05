@@ -8,6 +8,7 @@ import (
 	"os/signal"
 	"time"
 	"github.com/1shubham7/e-comm/handlers"
+	"github.com/gorilla/mux"
 	// "io"
 )
 
@@ -18,8 +19,10 @@ func main() {
 	// handlers
 	producthandler := handlers.NewProducts(l)
 
-	servemux := http.NewServeMux() //you can also call this sm
-	servemux.Handle("/", producthandler)
+	servemux := mux.NewRouter()
+	getRouter := servemux.Methods("GET").Subrouter() // this creates a route for a perticular http "GET" request and then .subrouter makes it a router again so that you can use handler in it.
+	getRouter.HandleFunc("/", producthandler.GetProducts)
+	// servemux.Handle("/", producthandler)
 
 	server := &http.Server{
 		Addr: ":6000",
