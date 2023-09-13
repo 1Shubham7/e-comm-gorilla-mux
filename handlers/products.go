@@ -76,5 +76,6 @@ func (p Products) MiddlewareProductValication(next http.Handler) http.Handler {
 		request := r.WithContext(ctx)
 		next.ServeHTTP(rw, request) //next is just a http Handler
 		//ServeHTTP() simply calls the code inside of the original function.
+		
 	})
 }

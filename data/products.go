@@ -1,18 +1,20 @@
 package data
 
-import ( 
-	"time"
+import (
 	"encoding/json"
-	"io"
 	"fmt"
+	"io"
+	"time"
+
+	"github.com/go-playground/validator"
 )
 
 type Product struct {
 	// stuff encoded inside `` is called struct tags, they have a specific usecase
 	ID          int 		`json:"id"` // now the ID is 'id' during the output, you can call it "hello" or anything
-	Name        string 		`json:"name"`
+	Name        string 		`json:"name" validate:"required"` // this is  a required field now
 	Description string 		`json:"description"`
-	Price       float32		`json:"price"`
+	Price       float32		`json:"price" validate:"gt=0` // greater than 0
 	SKU         string 		`json:"sku"`
 	CreatedOn   string 		`json"-"` // t	his will not output, we will use it internally
 	UpdatedOn   string 		`json"-"`
@@ -32,6 +34,11 @@ func (p *Product) FromJSON(r io.Reader) error {
 	return decoder.Decode(p)
 }
 
+func (p *Product) Validate(r io.Reader) error{
+	validate := validator.New()
+	
+	return validate.Struct(p) // this validates the struct you will enter, we are directly returning it, becuase of this we can add struct tags to the Producct struct
+}
 
 // abstracting the products by a function
 func GetProducts() Products {
