@@ -9,6 +9,7 @@ import (
 	"time"
 	"github.com/1shubham7/e-comm/handlers"
 	"github.com/gorilla/mux"
+	gohandlers "github.com/gorilla/handlers" //this is how  we give name, no I can simply use gohandlers.something
 	// "github.com/1shubham7/e-comm/env"
 	// "io"
 )
@@ -39,9 +40,14 @@ func main() {
 	postRouter.HandleFunc("/", producthandler.AddProduct)
 	postRouter.Use(producthandler.MiddlewareProductValication)
 
+	// deleteRouter := servemux.Methods(http.MethodDelete).Subrouter()
+	// deleteRouter.HandleFunc("/{id:[0-9]+}", producthandler.DeleteProduct)
+
+	corshandler := gohandlers.CORS(gohandlers.AllowedOrigins([]string{"http://localhost:3000"})) //this is where react application is
+
 	server := &http.Server{
 		Addr: ":6000",
-		Handler: servemux,
+		Handler: corshandler(servemux), // wrapped the servemux with corshandler
 		IdleTimeout: 120 * time.Second,
 		ReadTimeout: 5 *time.Second,
 		WriteTimeout: 10 *time.Second,

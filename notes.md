@@ -25,3 +25,12 @@ This is for PUT method with id 1
 ## `curl -v localhost:6000/1 -XPUT -d '{"name": "samosa", "description" : "spicy"}'`
 
 This is used to PUT and update the data for the id 1
+
+## Packages used
+
+In this project we are using
+- Gorilla Mux - for creating server
+- github.com/go-playground/validator - for JSON Validation
+- go swagger - to generate documentation for the API
+
+>> Rather than having the go swagger run every time, we are having it as a part of our CI.

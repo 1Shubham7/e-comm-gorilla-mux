@@ -1,10 +1,24 @@
+// Package classificationof Product API
+// 
+// Documentation for Product API
+// 
+// Schemes: http
+// BasePath: /
+// Version: 1.0.0
+// 
+// Consumes:
+//  -application/json
+// 
+// Produces:
+//  -application/json
+// swagger:meta
+
 package handlers
 
 import (
 	"log"
 	"net/http"
 	"context"
-	// "regexp"
 	"strconv"
 	"github.com/gorilla/mux"
 	"github.com/1shubham7/e-comm/data"
@@ -60,6 +74,31 @@ func (p Products ) UpdateProducts (rw http.ResponseWriter, r *http.Request){
 		return
 	}
 }
+
+// func (p *Products) DeleteProduct(rw http.ResponseWriter, r *http.Request) {
+// 	id := getProductID(r)
+
+// 	p.l.Println("[DEBUG] deleting record id", id)
+
+// 	err := data.DeleteProduct(id)
+// 	if err == data.ErrProductNotFound {
+// 		p.l.Println("[ERROR] deleting record id does not exist")
+
+// 		rw.WriteHeader(http.StatusNotFound)
+// 		data.ToJSON(&GenericError{Message: err.Error()}, rw)
+// 		return
+// 	}
+
+// 	if err != nil {
+// 		p.l.Println("[ERROR] deleting record", err)
+
+// 		rw.WriteHeader(http.StatusInternalServerError)
+// 		data.ToJSON(&GenericError{Message: err.Error()}, rw)
+// 		return
+// 	}
+
+// 	rw.WriteHeader(http.StatusNoContent)
+// }
 
 type KeyProduct struct{}
 
